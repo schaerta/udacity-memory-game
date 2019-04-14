@@ -37,6 +37,17 @@ h1 {
  * Styles for the deck of cards
  */
 
+@keyframes match {
+    from {background-color: #00FF00;}
+    to {background-color: #02ccba;}
+}
+
+@keyframes open {
+    from {background-color: #02b3e4;}
+    to {background-color: #02ccba;}
+}
+
+
 .deck {
     width: 660px;
     min-height: 680px;
@@ -66,13 +77,18 @@ h1 {
 }
 
 .deck .card.open {
-    transform: rotateY(0);
+    transform: rotateY(20deg);
+    animation-name: match;
+    animation-duration: 1s;
     background: #02b3e4;
     cursor: default;
 }
 
 .deck .card.show {
     font-size: 33px;
+    animation-name: open;
+    animation-duration: 1s;
+    background: #02ccba;
 }
 
 .deck .card.match {
