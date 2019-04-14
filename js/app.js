@@ -72,19 +72,12 @@ for (let i = 0; i < newSet.length; i++) {
 container.appendChild(board);
 
 /*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-let card = {};
-let domCard = {};
 let moves = 0;
+let card = {};
 let openCards = [];
 let checkingForMatch = false;
 
@@ -97,18 +90,20 @@ function addToOpenCards(card) {
 }
 
 function checkForMatch (openCards) {
-	console.log(openCards[0], openCards[1]);
 	// if match
+	// comparing both cards directly would not work, as they are not the same object.
+	// So we need to grab the Value of 'classList' of the child <i> element for the comparison to work.
 	if ((openCards[0].querySelector('i').classList.value) === (openCards[1].querySelector('i').classList.value)) {
-		console.log('Match');
 		openCards[0].removeEventListener('click', open);
 		openCards[1].removeEventListener('click', open);
+		openCards[0].classList.add('open');
+		openCards[1].classList.add('open');
 		openCards.length = 0;
 		checkingForMatch = false;
 	} else {
-		console.log("No Match");
 		openCards[0].isOpen = false;
 		openCards[1].isOpen = false;
+		// Set Timeout ensures that both cards stay open long enough for the player to see what is happening
 		setTimeout(closeCards, 500, openCards);
 	}
 }
@@ -122,6 +117,8 @@ function closeCards (openCards) {
 
 /* First function to execute when a card is clicked */
 function open () {
+	// this condition makes sure nothing happens when a user clicks a card
+	// while two other unmatched cards are still being displayed.
 	if (!checkingForMatch) {
 		card = this;
 		card.classList.toggle('show');
