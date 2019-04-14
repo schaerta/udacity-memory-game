@@ -76,21 +76,24 @@ container.appendChild(board);
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-let moves = 0;
+let numberOfMoves = 0;
+let moveDisplay = document.querySelector('.moves');
 let card = {};
 let openCards = [];
+let matchedPairs = 0;
 let checkingForMatch = false;
 
 function addToOpenCards(card) {
 	openCards.push(card);
 	if (openCards.length >= 2) {
+		numberOfMoves++;
+		moveDisplay.innerHTML = numberOfMoves;
 		checkingForMatch = true;
 		checkForMatch(openCards);
 	}
 }
 
 function checkForMatch (openCards) {
-	// if match
 	// comparing both cards directly would not work, as they are not the same object.
 	// So we need to grab the Value of 'classList' of the child <i> element for the comparison to work.
 	if ((openCards[0].querySelector('i').classList.value) === (openCards[1].querySelector('i').classList.value)) {
@@ -99,7 +102,12 @@ function checkForMatch (openCards) {
 		openCards[0].classList.add('open');
 		openCards[1].classList.add('open');
 		openCards.length = 0;
+		matchedPairs++;
 		checkingForMatch = false;
+		// Finish the game if all matches are found
+		if(matchedPairs === 8) {
+
+		}
 	} else {
 		openCards[0].isOpen = false;
 		openCards[1].isOpen = false;
