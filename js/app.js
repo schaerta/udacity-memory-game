@@ -93,6 +93,17 @@ function newGame() {
 	startGame();
 }
 
+function showSuccessMessage() {
+	let container = document.querySelector('.container');
+	let successContainer = document.createElement('div');
+	let successMessage = document.createElement('div');
+	successContainer.classList.add('success-container');
+	successMessage.classList.add('success-message');
+	container.appendChild(successContainer);
+	successContainer.appendChild(successMessage);
+	successMessage.innerHTML = "<h2>Congratulations!</h2><p>You completed the game!</p>"
+}
+
 function addToOpenCards(card) {
 	openCards.push(card);
 	if (openCards.length >= 2) {
@@ -124,7 +135,7 @@ function checkForMatch (openCards) {
 		checkingForMatch = false;
 		// Finish the game if all matches are found
 		if(matchedPairs === 8) {
-
+			showSuccessMessage();
 		}
 	} else {
 		openCards[0].isOpen = false;
