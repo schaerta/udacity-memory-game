@@ -1,13 +1,15 @@
 /* Memory Game */
 
 /*
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
 let numberOfMoves = 0;
 let moveDisplay = document.querySelector('.moves');
 let stars = document.querySelector('.stars');
+let restartButton = document.querySelector('.restart');
+restartButton.addEventListener('click', newGame);
 let card = {};
 let openCards = [];
 let matchedPairs = 0;
@@ -19,8 +21,6 @@ function startGame() {
 	let container = document.querySelector('.container');
 	let board = document.createElement('ul');
 	board.classList.add('deck');
-	let restartButton = document.querySelector('.restart');
-	restartButton.addEventListener('click', newGame);
 
 	// Shuffle function from http://stackoverflow.com/a/2450976
 	function shuffle (array) {
@@ -85,11 +85,12 @@ function startGame() {
 	/* Append Board to Document */
 
 	container.appendChild(board);
+}
 
-	function newGame() {
-		board.remove();
-		startGame();
-	}
+function newGame() {
+	let board = document.querySelector('.deck');
+	board.remove();
+	startGame();
 }
 
 function addToOpenCards(card) {
